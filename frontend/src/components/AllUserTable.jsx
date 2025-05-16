@@ -151,7 +151,6 @@ const AllUserTable = () => {
           </Grid>
         </Paper>
 
-        {/* Таблица пользователей */}
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: "calc(100vh - 260px)" }}>
             <Table stickyHeader>

@@ -9,7 +9,6 @@ const ForgotPassword = () => {
 
   const handleSend = async () => {
     try {
-      // Вызов API для сброса пароля
       await forgotPassword({ email });
       alert(`Password reset link sent to ${email}`);
     } catch (err) {

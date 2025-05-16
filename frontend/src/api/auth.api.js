@@ -16,7 +16,6 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // При 401 ошибке удаляем токен и перенаправляем на логин
       localStorage.removeItem("token");
       window.location.href = '/login';
     }

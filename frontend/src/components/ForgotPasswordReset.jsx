@@ -37,7 +37,7 @@ const ForgotPasswordReset = () => {
   };
 
   return (
-    <Container maxWidth="">
+    <Container maxWidth="" sx={{ display: "flex", justifyContent: "center" }}>
       <Paper elevation={3} sx={{ padding: 6, marginTop: 8 }}>
         <Typography variant="h5" gutterBottom align="center">
           Reset Your Password

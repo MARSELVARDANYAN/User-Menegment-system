@@ -56,11 +56,10 @@ const AdminUserTable = () => {
     status: "all",
     role: "all",
   });
-  const [detailsOpen, setDetailsOpen] = useState(false); // Новое состояние
+  const [detailsOpen, setDetailsOpen] = useState(false); 
   const [selectedUser, setSelectedUser] = useState(null); 
   const navigate = useNavigate();
 
-  // Загрузка пользователей
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -79,7 +78,6 @@ const AdminUserTable = () => {
     fetchUsers();
   }, [filters]);
 
-  // Обработчики действий
   const handleDelete = async (userId) => {
     try {
       await deleteUserById(userId);
@@ -103,7 +101,6 @@ const AdminUserTable = () => {
   const handleSave = async () => {
     try {
       if (currentUser._id) {
-        // Обновление
         const response = await updateUserById(currentUser._id, currentUser);
         setUsers(
           users.map((user) =>
@@ -111,7 +108,6 @@ const AdminUserTable = () => {
           )
         );
       } else {
-        // Создание
         const response = await adminCreateUser(currentUser);
         setUsers([...users, response.data]);
       }
@@ -137,7 +133,6 @@ const AdminUserTable = () => {
     >
       <CssBaseline />
 
-      {/* Шапка */}
       <AppBar position="static" elevation={1} color="default" >
         <Toolbar >
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -173,9 +168,7 @@ const AdminUserTable = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Основное содержимое */}
       <Container maxWidth={false} sx={{ flex: 1, py: 3, overflow: "auto" }}>
-        {/* Панель фильтров */}
         <Paper sx={{ p: 3, mb: 3 }}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={4}>
@@ -230,7 +223,6 @@ const AdminUserTable = () => {
           </Grid>
         </Paper>
 
-        {/* Таблица пользователей */}
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: "calc(100vh - 260px)" }}>
             <Table stickyHeader>
@@ -360,7 +352,6 @@ const AdminUserTable = () => {
         </Paper>
       </Container>
 
-      {/* Диалог редактирования */}
       <Dialog
         open={openDialog}
         onClose={() => setOpenDialog(false)}
