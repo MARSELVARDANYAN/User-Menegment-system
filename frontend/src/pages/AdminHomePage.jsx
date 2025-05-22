@@ -17,6 +17,7 @@ import {
   Edit as EditIcon,
   Visibility as ViewIcon,
 } from "@mui/icons-material";
+import AdminInfoCard from "../components/admin/AdminInfoCard";
 
 const AdminHomePage = () => {
   const [email, setEmail] = useState("");
@@ -70,6 +71,7 @@ const AdminHomePage = () => {
           <LogoutIcon />
         </IconButton>
       </Tooltip>
+      <AdminInfoCard adminId={localStorage.getItem("userId")} />
 
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" gutterBottom>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://localhost:3002",
+  baseURL: "http://localhost:3008",
 });
 
 API.interceptors.request.use((config) => {
@@ -24,13 +24,17 @@ API.interceptors.response.use(
   }
 );
 
-export const fetchAllUsers = () => API.get("/allUsers");
+export const fetchAllUsers = () => API.get("/users");
 
-export const getUsersByOption = (option) => API.get("users/", option);
+export const getUsersByOption = (option) => API.get("users/option", option);
 
 export const deleteUserById = (id) => API.delete(`/users/${id}`);
 
-export const updateUserById = (id, data) => API.put(`/users/${id}`, data);
+export const updateUserById = (id, data) => {
+  return API.put(`/users/${id}`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
 
 export const toggleUserStatus = (id) => API.patch(`/users/${id}/status`, {});
 

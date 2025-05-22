@@ -170,9 +170,11 @@ const AllUserTable = () => {
                   <TableRow hover key={user._id}>
                     <TableCell>
                       <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Avatar src={user.avatar} sx={{ mr: 2 }}>
-                          {user.name?.charAt(0) || "U"}
-                        </Avatar>
+                        <Avatar
+                          src={user.avatar?.data || "/default-avatar.jpg"}
+                          alt={user.name}
+                          sx={{ width: 80, height: 80, mr: 3 }}
+                        />
                         <Box>
                           <Typography variant="body1" fontWeight="medium">
                             {user.name || "No name"}

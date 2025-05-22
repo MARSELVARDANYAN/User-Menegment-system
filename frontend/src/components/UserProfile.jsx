@@ -35,6 +35,7 @@ import {
   Visibility as ViewIcon,
   Close as CloseIcon,
   Logout as LogoutIcon,
+  Upload,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { deleteUserById, updateUserById } from "../api/users.api";
@@ -44,6 +45,8 @@ const UserProfile = ({ user }) => {
   const [editData, setEditData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [avatar, setAvatar] = useState(null);
+
   const navigate = useNavigate();
 
   if (!user) return null;
@@ -67,7 +70,19 @@ const UserProfile = ({ user }) => {
   const handleEditSubmit = async () => {
     try {
       setLoading(true);
-      await updateUserById(user._id, editData);
+
+      const formData = new FormData();
+      formData.append("name", editData.name);
+      formData.append("email", editData.email);
+      formData.append("phone", editData.phone);
+
+      if (avatar instanceof File) {
+        formData.append("file", avatar);
+      } else if (avatar === null && user.avatar) {
+        formData.append("removeAvatar", "true");
+      }
+
+      await updateUserById(user._id, formData);
       setOpenEditModal(false);
       window.location.reload();
     } catch (err) {
@@ -77,6 +92,10 @@ const UserProfile = ({ user }) => {
     }
   };
 
+  const handleAvatarChange = (e) => {
+      const file = e.target.files[0];
+      setAvatar(file);
+    };
   const viewUsers = () => {
     navigate("/allUsers-table");
   };
@@ -133,7 +152,7 @@ const UserProfile = ({ user }) => {
       >
         <Stack direction="row" spacing={4} alignItems="center" sx={{ mb: 4 }}>
           <Avatar
-            src={user.avatar}
+            src={user.avatar?.data}
             sx={{
               width: 120,
               height: 120,
@@ -362,19 +381,42 @@ const UserProfile = ({ user }) => {
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Avatar URL"
-                name="avatar"
-                value={editData.avatar || ""}
-                onChange={handleEditChange}
-                margin="normal"
-                variant="outlined"
-              />
+              <Typography variant="subtitle1" gutterBottom>
+                Upload Avatar
+              </Typography>
+
+              <Button variant="outlined" component="label">
+                Upload Avatar
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                />
+              </Button>
+              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+                {avatar && (
+                  <Chip
+                    label={avatar.name}
+                    onDelete={() => setAvatar(null)}
+                    color="primary"
+                    deleteIcon={<CloseIcon />}
+                  />
+                )}
+                {user.avatar && !avatar && (
+                  <Chip
+                    label="Remove Avatar"
+                    onDelete={() => setAvatar(null)}
+                    color="error"
+                    deleteIcon={<CloseIcon />}
+                  />
+                )}
+              </Stack>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions sx={{ p: 3 }}>
+          {/* Cancel edit button*/}
           <Button
             onClick={() => setOpenEditModal(false)}
             variant="outlined"

@@ -44,7 +44,7 @@ import {
   toggleUserStatus,
 } from "../api/users.api.js";
 import { adminCreateUser } from "../api/admin.api.js";
-import UserDetailsDialog from "./UserDetailsModal.jsx"; 
+import UserDetailsDialog from "./UserDetailsModal.jsx";
 import { useNavigate } from "react-router-dom";
 
 const AdminUserTable = () => {
@@ -56,8 +56,8 @@ const AdminUserTable = () => {
     status: "all",
     role: "all",
   });
-  const [detailsOpen, setDetailsOpen] = useState(false); 
-  const [selectedUser, setSelectedUser] = useState(null); 
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -133,17 +133,17 @@ const AdminUserTable = () => {
     >
       <CssBaseline />
 
-      <AppBar position="static" elevation={1} color="default" >
-        <Toolbar >
+      <AppBar position="static" elevation={1} color="default">
+        <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             User Management System
           </Typography>
           <Button
-          style={{ marginRight: '10px' }}
+            style={{ marginRight: "10px" }}
             variant="contained"
             color="info"
             onClick={() => {
-              navigate(-1)
+              navigate(-1);
             }}
           >
             back
@@ -241,8 +241,17 @@ const AdminUserTable = () => {
                 {users.map((user) => (
                   <TableRow hover key={user._id}>
                     <TableCell>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Avatar src={user.avatar} sx={{ mr: 2 }}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                        <Avatar
+                          src={user.avatar?.data}
+                          sx={{
+                            width: 90,
+                            height: 90,
+                            fontSize: 48,
+                            border: "3px solid",
+                            borderColor: "primary.main",
+                          }}
+                        >
                           {user.name?.charAt(0) || "U"}
                         </Avatar>
                         <Box>

@@ -8,7 +8,9 @@ const UserSchema = new mongoose.Schema(
       default: () => Date.now().toString(),
     },
     avatar: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+      default: null,
     },
     name: {
       type: String,
